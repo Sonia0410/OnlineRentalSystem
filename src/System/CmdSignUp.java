@@ -1,3 +1,5 @@
+package System;
+
 import java.text.*;
 import java.util.*;
 
@@ -23,7 +25,6 @@ private RentalSystem rs = RentalSystem.getInstance();
         	System.out.println("Invalid date of birth!\n");
         } catch (ExExistUser e) {
 			System.out.println(e.getMessage());
-        } 
+        }
 	}
-
 }

@@ -1,6 +1,6 @@
-import java.text.*;
+package System;
+
 import java.util.*;
-import java.util.regex.*;
 
 public class RentalSystem {
     
@@ -15,9 +15,19 @@ public class RentalSystem {
     private RentalSystem() {
     	userList = new ArrayList<User>();
         mangaList = new ArrayList<Manga>();
-        // need to add some predefined data here
-        User staff = new Staff("staffU", "staffP", new Date());
+    }
+    
+    // for test script only
+    public void addStaff(String username, String password, Date birthday) {
+    	User staff = new Staff(username, password, birthday);
         userList.add(staff);
+    }
+    
+    // for test script only
+    public User addUser(String membership, String username, String password, Date birthday, int coin) {
+    	User user = new User(membership, username, password, birthday, coin);
+        userList.add(user);
+        return user;
     }
     
     public void register(String username, String password, Date birthday) throws ExExistUser {

@@ -1,21 +1,25 @@
+package System;
+
 import java.util.*;
+import Test.*;
 
 public class Main {
 	
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+    	TestScriptReader.execute();
     	RentalSystem rs = RentalSystem.getInstance();
     	
-		System.out.println("Welcome!\n");
+    	System.out.println("Welcome!\n");
     	Scanner scanner = new Scanner(System.in);
         while (true) {
         	try {
-	        	System.out.println("Command:");
-	        	System.out.println("1: Login");
-	        	System.out.println("2: Sign Up");
-	        	System.out.println("3: Search Manga");
-	        	System.out.println("4: Exit");
+        		System.out.println("Command:");
+        		System.out.println("1: Login");
+        		System.out.println("2: Sign Up");
+        		System.out.println("3: Search Manga");
+        		System.out.println("4: Exit");
 	        	
-	        	System.out.print("\nPlease enter a command (e.g. 1): ");
+        		System.out.print("\nPlease enter a command (e.g. 1): ");
 	        	String command = scanner.nextLine();
 	        	System.out.println();
 	        	

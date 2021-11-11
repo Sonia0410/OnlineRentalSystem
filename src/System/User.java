@@ -1,3 +1,5 @@
+package System;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,26 @@ public class User {
 		this.password = password;
 		this.birthday = birthday;
 		this.coin = 120;
+		this.lastLogin = new Date();
+	}
+	
+	// for test script only
+	public User (String membership, String username, String password, Date birthday, int coin) {
+		this.bookshelf = new ArrayList<RentalRecord>();
+		if (membership.equals("Basic")) {
+			this.membership = BasicMember.getInstance();
+		} else if (membership.equals("Premium")) {
+			Date currentDate = new Date();
+			Calendar c = Calendar.getInstance(); 
+			c.setTime(currentDate); 
+			c.add(Calendar.MONTH, 1); // current date + 1 month
+			Date expireDate = c.getTime();
+			this.membership = new PremiumMember(expireDate);
+		}
+		this.username = username;
+		this.password = password;
+		this.birthday = birthday;
+		this.coin = coin;
 		this.lastLogin = new Date();
 	}
 	
@@ -57,9 +79,10 @@ public class User {
 		        } else if (command.equals("2")) {
 		        	(new CmdSearchManga()).execute();
 		        } else if (command.equals("3")) {
-		        	membership.readManga(this);
+		        	membership.showReadMangaRule();
+		        	(new CmdReadManga(this)).execute();
 		        } else if (command.equals("4")) {
-		        	membership.rentManga(this);
+		        	membership.showRentMangaRule(this);
 		        } else if (command.equals("5")) {
 		        	viewBookshelf();
 		        } else if (command.equals("6")) {
@@ -110,6 +133,14 @@ public class User {
 		return false;
 	}
 	
+	public void readManga(Manga manga, String bookIndex, int episode) {
+		membership.readManga(this, manga, bookIndex, episode);
+	}
+	
+	public void rentManga(Manga manga, ArrayList<Integer> episodeList) {
+		membership.rentManga(this, manga, episodeList);
+	}
+	
 	public void viewBookshelf() {
 		System.out.println("\nFound " + bookshelf.size() + " record(s):");
 		System.out.println("Index\tName\tEpisodes\tExpire Date\tRecord Type\n");
@@ -136,13 +167,16 @@ public class User {
 	public void purchasePremiumMembership() {
 		Payment payment = Payment.getInstance();
 		if (payment.pay(this, 48)) {
+			// something wrong here (expire date = current) (ref: User.java test script constructor)
 			Date expireDate = new Date();
 			Calendar c = Calendar.getInstance(); 
 			c.setTime(expireDate); 
 			c.add(Calendar.MONTH, 1); // current date + 1 month
+			// ---------------------
 			this.membership = new PremiumMember(expireDate);
 			System.out.println("Successfully purchased the Premium Membership.\n");
 		} else {
+			// "purchse" --> wrong
 			System.out.println("Cannot purchse the Premium Membership.\n");
 		}
 	}

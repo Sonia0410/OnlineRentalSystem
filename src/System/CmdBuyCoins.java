@@ -1,3 +1,7 @@
+package System;
+
+import System.User;
+
 public class CmdBuyCoins implements Command {
 	
 	private Payment payment = Payment.getInstance();

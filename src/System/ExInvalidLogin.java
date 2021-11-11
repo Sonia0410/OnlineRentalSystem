@@ -1,3 +1,5 @@
+package System;
+
 public class ExInvalidLogin extends Exception {
 	
 	public ExInvalidLogin() {

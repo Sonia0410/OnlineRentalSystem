@@ -1,3 +1,7 @@
+package System;
+
+import System.User;
+
 public class CmdLogout implements Command {
 	
 	private User user;

@@ -1,9 +1,7 @@
+package System;
+
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
-enum RentalRecordType {
-	RENT, BIRTHDAY_GIFT
-}
 
 public class RentalRecord {
 	

@@ -1,3 +1,5 @@
+package System;
+
 public class ExWrongCommand extends Exception {
 	
 	public ExWrongCommand() {

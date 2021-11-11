@@ -1,3 +1,5 @@
+package System;
+
 import java.util.*;
 
 public class Payment {
@@ -14,13 +16,16 @@ public class Payment {
 			try {
 				System.out.println("Please pay $" + amount);
 				System.out.println("Payment Method Option:");
-		    	System.out.println("1: Credit Card Payment");
+		    	System.out.println("1: Visa Card Payment");
+		    	System.out.println("2: Master Card Payment");
 				Scanner scanner = new Scanner(System.in);
 				System.out.print("\nPlease enter you option: ");
 				String option = scanner.nextLine();
 				System.out.println();
 				if (option.equals("1")) {
-					paymentMethod = CreditCardPayment.getInstance();
+					paymentMethod = VisaCardPayment.getInstance();
+				} else if (option.equals("2")) {
+					paymentMethod = MasterCardPayment.getInstance();
 				} else {
 					throw new ExInvalidOption();
 				}

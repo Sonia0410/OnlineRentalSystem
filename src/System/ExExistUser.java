@@ -1,3 +1,5 @@
+package System;
+
 public class ExExistUser extends Exception {
 	
 	public ExExistUser() {

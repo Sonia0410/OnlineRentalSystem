@@ -1,3 +1,5 @@
+package System;
+
 public class ExNoSuchManga extends Exception {
 	
 	public ExNoSuchManga() {
