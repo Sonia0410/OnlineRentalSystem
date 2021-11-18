@@ -2,6 +2,7 @@ package System;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class RentalRecord {
 	
@@ -41,12 +42,26 @@ public class RentalRecord {
 	
 	public String getInfo() {
 		String episodesString = "";
-		for (int i=0; i<episodesList.size(); i++) {
-			episodesString = episodesString.concat(String.valueOf(episodesList.get(i)));
-			if (i < episodesList.size() - 1) {
-				episodesString = episodesString.concat(", ");
-			}
-		}
+		
+//		Code Refactoring: Replace Loop With Pipeline
+		
+//		Old:
+		
+//		for (int i=0; i<episodesList.size(); i++) {
+//			episodesString = episodesString.concat(String.valueOf(episodesList.get(i)));
+//			if (i < episodesList.size() - 1) {
+//				episodesString = episodesString.concat(", ");
+//			}
+//		}
+
+//		New:
+		
+		episodesString = episodesList.stream()
+				.map(x -> x.toString()) // convert int to string
+				.collect(Collectors.joining(", "));
+		
+//		---------------
+
 		String expireStatus = "";
 		if (expireDate.before(new Date())) {
 			expireStatus = "Expired ";

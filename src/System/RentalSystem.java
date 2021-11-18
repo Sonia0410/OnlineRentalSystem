@@ -1,6 +1,7 @@
 package System;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class RentalSystem {
     
@@ -82,11 +83,25 @@ public class RentalSystem {
     
     public void searchManga(String bookIndex, String name, String category, String author, Date updateDate) {
     	ArrayList<Manga> result = new ArrayList<Manga>();
-        for (Manga manga: mangaList) {
-        	if (manga.isThisBook(bookIndex, name, category, author, updateDate)) {
-        		result.add(manga);
-        	}
-    	}
+    	
+//		Code Refactoring: Replace Loop With Pipeline
+    	
+//    	Old:
+    	
+//        for (Manga manga: mangaList) {
+//        	if (manga.isThisBook(bookIndex, name, category, author, updateDate)) {
+//        		result.add(manga);
+//        	}
+//    	}
+    	
+//    	New:
+    	
+    	result = (ArrayList<Manga>)mangaList.stream()
+    			.filter(manga -> manga.isThisBook(bookIndex, name, category, author, updateDate))
+    			.collect(Collectors.toList());
+    	
+//		---------------
+    	
     	System.out.println("Found " + result.size() + " Manga(s):");
     	System.out.println("Index\tName\tCategory\tAuthor\tUpdate Date\tNumber of Episodes\n");
     	for (Manga manga : result) {
