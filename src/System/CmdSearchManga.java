@@ -6,23 +6,25 @@ import java.util.*;
 public class CmdSearchManga implements Command {
 	
 	private RentalSystem rs = RentalSystem.getInstance();
-		
+	
+	// fixed (ENTER key for ignore)
+	// fixed (input update date --> max retry 3 times)
 	public void execute() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.print("Please enter Manga index (- for ignore): ");
+		System.out.print("Please enter Manga index (Press ENTER key for ignore): ");
 		String bookIndex = scanner.nextLine();
-		System.out.print("Please enter Manga name (- for ignore): ");
+		System.out.print("Please enter Manga name (Press ENTER key for ignore): ");
 		String name = scanner.nextLine();
-		System.out.print("Please enter Manga category (- for ignore): ");
+		System.out.print("Please enter Manga category (Press ENTER key for ignore): ");
 		String category = scanner.nextLine();
-		System.out.print("Please enter Manga author (- for ignore): ");
+		System.out.print("Please enter Manga author (Press ENTER key for ignore): ");
 		String author = scanner.nextLine();
 		Date updateDate = null;
-		while(true) {
+		for (int i=0; i<=3; i++) {
 			try {
-				System.out.print("Please enter Manga update date  (format: yyyy/MM/dd) (- for ignore): ");
+				System.out.print("Please enter Manga update date  (format: yyyy/MM/dd) (Press ENTER key for ignore): ");
 				String uDate = scanner.nextLine();
-				if (uDate.equals("-")) {
+				if (uDate.equals("")) {
 					break;
 				}
 				DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
@@ -30,7 +32,12 @@ public class CmdSearchManga implements Command {
 		    	updateDate = df.parse(uDate);
 		    	break;
 			} catch (ParseException e) {
-				System.out.println("Invalid update date! Please try again.");
+				if (i < 3) {
+					System.out.println("Invalid update date! Please try again.");
+				} else {
+					System.out.println("Invalid update date!\n");
+					return;
+				}
 			}
 		}
 		System.out.println();

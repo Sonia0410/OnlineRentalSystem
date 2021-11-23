@@ -4,8 +4,9 @@ import java.util.*;
 
 public class Staff extends User {
 	
-	public Staff(String username, String password, Date birthday) {
-		super(username, password, birthday);
+//	Code Refactoring: Rename Variable (birthday --> dateOfBirth)
+	public Staff(String username, String password, Date dateOfBirth) {
+		super(username, password, dateOfBirth);
 	}
 	
 	public void successLogin() {

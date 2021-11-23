@@ -1,5 +1,8 @@
 package System;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -13,21 +16,37 @@ public class Manga {
 	private int numberOfEpisodes;
 	private ArrayList<String> episodesContent;
     
+	// fixed (updateDate HH:mm:ss set to 00:00:00 because hiding updateDate hh:mm:ss)
     public Manga(String bookIndex, String name, String category, String author, String firstEpisodeContent) {
         this.bookIndex = bookIndex;
         this.name = name;
         this.category = category;
         this.author = author;
-        this.updateDate = new Date();
+        renewUpdateDate();
         this.numberOfEpisodes = 1;
         this.episodesContent = new ArrayList<String>();
         this.episodesContent.add(firstEpisodeContent);
     }
     
+    // fixed (updateDate HH:mm:ss set to 00:00:00 because hiding updateDate hh:mm:ss)
     public void addOneEpisode(String content) {
     	this.numberOfEpisodes += 1;
     	episodesContent.add(content);
-    	updateDate = new Date();
+    	renewUpdateDate();
+    }
+    
+    // added this method in V4 (fixed)(updateDate HH:mm:ss set to 00:00:00 because hiding updateDate hh:mm:ss)
+    public void renewUpdateDate() {
+    	Date currentDate = new Date();
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+	    String today = fmt.format(currentDate);
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	df.setLenient(false);
+    	try {
+    		this.updateDate = df.parse(today + " 00:00:00");
+    	} catch (ParseException e) {
+    		System.out.println("Error in manga update date.");
+    	}
     }
     
     public String getContent(int episode) {
@@ -38,8 +57,10 @@ public class Manga {
     	}
     }
     
+    // fixed (hide updateDate hh:mm:ss)
     public String getInfo() {
-    	return bookIndex + "\t" + name + "\t" + category + "\t" + author + "\t" + updateDate.toString() + "\t" + Integer.toString(numberOfEpisodes);
+    	DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+    	return bookIndex + "\t" + name + "\t" + category + "\t" + author + "\t" + df.format(updateDate) + "\t" + Integer.toString(numberOfEpisodes);
     }
     
     public boolean isThisBook(String bookIndex) {
@@ -49,31 +70,32 @@ public class Manga {
     	return false;
     }
     
+    //  fixed (ENTER key for ignore)
     public boolean isThisBook(String bookIndex, String name, String category, String author, Date updateDate) {
     	//regular expression
     	Pattern bookIndexPattern;
-    	if (bookIndex.equals("-")) {
+    	if (bookIndex.equals("")) {
     		bookIndexPattern = Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
     	} else {
     		bookIndexPattern = Pattern.compile("^.{0,}" + bookIndex + ".{0,}$", Pattern.CASE_INSENSITIVE);
     	}
     	
     	Pattern namePattern;
-    	if (name.equals("-")) {
+    	if (name.equals("")) {
     		namePattern = Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
     	} else {
     		namePattern = Pattern.compile("^.{0,}" + name + ".{0,}$", Pattern.CASE_INSENSITIVE);
     	}
     	
     	Pattern categoryPattern;
-    	if (category.equals("-")) {
+    	if (category.equals("")) {
     		categoryPattern = Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
     	} else {
     		categoryPattern = Pattern.compile("^.{0,}" + category + ".{0,}$", Pattern.CASE_INSENSITIVE);
     	}
     	
     	Pattern authorPattern;
-    	if (author.equals("-")) {
+    	if (author.equals("")) {
     		authorPattern = Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
     	} else {
     		authorPattern = Pattern.compile("^.{0,}" + author + ".{0,}$", Pattern.CASE_INSENSITIVE);

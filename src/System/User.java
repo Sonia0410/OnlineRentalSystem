@@ -11,22 +11,24 @@ public class User {
 	private Membership membership;
 	protected String username; // = unique ID
 	protected String password;
-	protected Date birthday;
+//	Code Refactoring: Rename Variable (birthday --> dateOfBirth)
+	protected Date dateOfBirth;
 	private int coin;
 	protected Date lastLogin;
 	
-	public User(String username, String password, Date birthday) {
+//	Code Refactoring: Rename Variable (birthday --> dateOfBirth)
+	public User(String username, String password, Date dateOfBirth) {
 		this.bookshelf = new ArrayList<RentalRecord>();
 		this.membership = BasicMember.getInstance();
 		this.username = username;
 		this.password = password;
-		this.birthday = birthday;
+		this.dateOfBirth = dateOfBirth;
 		this.coin = 120;
 		this.lastLogin = new Date();
 	}
 	
 	// for test script only
-	public User (String membership, String username, String password, Date birthday, int coin) {
+	public User (String membership, String username, String password, Date dateOfBirth, int coin) {
 		this.bookshelf = new ArrayList<RentalRecord>();
 		if (membership.equals("Basic")) {
 			this.membership = BasicMember.getInstance();
@@ -40,7 +42,7 @@ public class User {
 		}
 		this.username = username;
 		this.password = password;
-		this.birthday = birthday;
+		this.dateOfBirth = dateOfBirth;
 		this.coin = coin;
 		this.lastLogin = new Date();
 	}
@@ -150,11 +152,14 @@ public class User {
     	System.out.println();
 	}
 	
+//	Code Refactoring: Rename Variable (birthday --> dateOfBirth)
+	// fixed (hide date of birth hh:mm:ss)
 	public void viewStatus() {
 		System.out.println("Membership: " + membership.toString());
     	System.out.println("Username: " + username);
     	System.out.println("Password: " + password);
-    	System.out.println("Birthday: " + birthday.toString());
+    	DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+    	System.out.println("Date of birth (yyyy/MM/dd): " + df.format(dateOfBirth));
     	System.out.println("Coins: " + coin);
     	System.out.println("Last Login: " + lastLogin.toString());
     	System.out.println();
@@ -167,17 +172,17 @@ public class User {
 	public void purchasePremiumMembership() {
 		Payment payment = Payment.getInstance();
 		if (payment.pay(this, 48)) {
-			// something wrong here (expire date = current) (ref: User.java test script constructor)
-			Date expireDate = new Date();
+			// fixed (expire date = current --> expire date = current + 1 month)
+			Date currentDate = new Date();
 			Calendar c = Calendar.getInstance(); 
-			c.setTime(expireDate); 
+			c.setTime(currentDate); 
 			c.add(Calendar.MONTH, 1); // current date + 1 month
-			// ---------------------
+			Date expireDate = c.getTime();
 			this.membership = new PremiumMember(expireDate);
 			System.out.println("Successfully purchased the Premium Membership.\n");
 		} else {
-			// "purchse" --> wrong
-			System.out.println("Cannot purchse the Premium Membership.\n");
+			// fixed ("purchse" --> "purchase")
+			System.out.println("Cannot purchase the Premium Membership.\n");
 		}
 	}
 	
@@ -189,10 +194,11 @@ public class User {
 	    }
 	}
 	
+//	Code Refactoring: Rename Variable (birthday --> dateOfBirth)
 	public boolean checkTodayIsBirthday() {
 		Date currentDate = new Date();
 		SimpleDateFormat fmt = new SimpleDateFormat("MMdd");
-	    if (fmt.format(birthday).equals(fmt.format(currentDate))) {
+	    if (fmt.format(dateOfBirth).equals(fmt.format(currentDate))) {
 	    	return true;
 	    } else {
 	    	return false;

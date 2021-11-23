@@ -7,6 +7,7 @@ public class CmdSignUp implements Command {
 	
 private RentalSystem rs = RentalSystem.getInstance();
 	
+	// fixed (ensure the date of birth is not from future)
 	public void execute() {
 		Scanner scanner = new Scanner(System.in);
 		try {
@@ -19,8 +20,24 @@ private RentalSystem rs = RentalSystem.getInstance();
 	        System.out.println();
         	DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         	df.setLenient(false);
-        	Date birthday = df.parse(dob);
-        	rs.register(username, password, birthday);
+        	
+//    		Code Refactoring: Rename Variable
+        	
+//        	Old:
+        	
+//        	Date birthday = df.parse(dob);
+        	
+//        	New:
+        	
+        	Date dateOfBirth = df.parse(dob);
+        	
+//    		---------------
+        	
+        	Date currentDate = new Date();
+    		if (dateOfBirth.after(currentDate)) {
+    			throw new ParseException("", 24);
+    		}
+        	rs.register(username, password, dateOfBirth);
 		} catch (ParseException e) {
         	System.out.println("Invalid date of birth!\n");
         } catch (ExExistUser e) {

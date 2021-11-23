@@ -19,25 +19,26 @@ public class RentalSystem {
     }
     
     // for test script only
-    public void addStaff(String username, String password, Date birthday) {
-    	User staff = new Staff(username, password, birthday);
+    public void addStaff(String username, String password, Date dateOfBirth) {
+    	User staff = new Staff(username, password, dateOfBirth);
         userList.add(staff);
     }
     
     // for test script only
-    public User addUser(String membership, String username, String password, Date birthday, int coin) {
-    	User user = new User(membership, username, password, birthday, coin);
+    public User addUser(String membership, String username, String password, Date dateOfBirth, int coin) {
+    	User user = new User(membership, username, password, dateOfBirth, coin);
         userList.add(user);
         return user;
     }
     
-    public void register(String username, String password, Date birthday) throws ExExistUser {
+//	Code Refactoring: Rename Variable (birthday --> dateOfBirth)
+    public void register(String username, String password, Date dateOfBirth) throws ExExistUser {
     	for (User user : userList) {
     		if (user.getUsername().equals(username)) {
     			throw new ExExistUser();
     		}
     	}
-    	User newUser = new User(username, password, birthday);
+    	User newUser = new User(username, password, dateOfBirth);
     	userList.add(newUser);
     	System.out.println("Successfully joined.\n");
     }
@@ -103,7 +104,7 @@ public class RentalSystem {
 //		---------------
     	
     	System.out.println("Found " + result.size() + " Manga(s):");
-    	System.out.println("Index\tName\tCategory\tAuthor\tUpdate Date\tNumber of Episodes\n");
+    	System.out.println("Index\tName\tCategory\tAuthor\tUpdate Date (yyyy/MM/dd)\tNumber of Episodes\n");
     	for (Manga manga : result) {
     		System.out.println(manga.getInfo());
     	}
