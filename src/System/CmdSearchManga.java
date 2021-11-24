@@ -7,22 +7,22 @@ public class CmdSearchManga implements Command {
 	
 	private RentalSystem rs = RentalSystem.getInstance();
 	
-	// fixed (ENTER key for ignore)
+	// fixed (leave the input field blank to ignore)
 	// fixed (input update date --> max retry 3 times)
 	public void execute() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.print("Please enter Manga index (Press ENTER key for ignore): ");
+		System.out.print("Please enter Manga index (Leave the input field blank to ignore): ");
 		String bookIndex = scanner.nextLine();
-		System.out.print("Please enter Manga name (Press ENTER key for ignore): ");
+		System.out.print("Please enter Manga name (Leave the input field blank to ignore): ");
 		String name = scanner.nextLine();
-		System.out.print("Please enter Manga category (Press ENTER key for ignore): ");
+		System.out.print("Please enter Manga category (Leave the input field blank to ignore): ");
 		String category = scanner.nextLine();
-		System.out.print("Please enter Manga author (Press ENTER key for ignore): ");
+		System.out.print("Please enter Manga author (Leave the input field blank to ignore): ");
 		String author = scanner.nextLine();
 		Date updateDate = null;
 		for (int i=0; i<=3; i++) {
 			try {
-				System.out.print("Please enter Manga update date  (format: yyyy/MM/dd) (Press ENTER key for ignore): ");
+				System.out.print("Please enter Manga update date  (format: yyyy/MM/dd) (Leave the input field blank to ignore): ");
 				String uDate = scanner.nextLine();
 				if (uDate.equals("")) {
 					break;

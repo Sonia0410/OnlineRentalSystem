@@ -6,6 +6,9 @@ public class CmdPurchaseCoinsOptions implements Command {
 	
 	private User user;
 	
+//	Code Refactoring: Substitute Algorithm
+	private String[][] coinsOption = {{"100", "6"}, {"200", "12"}, {"500", "30"}, {"1000", "60"}};
+	
 	public CmdPurchaseCoinsOptions(User user) {
 		this.user = user;
 	}
@@ -13,32 +16,29 @@ public class CmdPurchaseCoinsOptions implements Command {
 	public void execute() {
 		try {
 			System.out.println("Option:");
-	    	System.out.println("1: 100 coins ($6)");
-	    	System.out.println("2: 200 coins ($12)");
-	    	System.out.println("3: 500 coins ($30)");
-	    	System.out.println("4: 1000 coins ($60)");
+//			Code Refactoring: Substitute Algorithm
+			for (int i=0; i<coinsOption.length; i++) {
+				System.out.println((i+1) + ": " + coinsOption[i][0] + " coins ($" + coinsOption[i][1] + ")");
+			}
 			Scanner scanner = new Scanner(System.in);
 			System.out.print("\nPlease enter you option: ");
 			String option = scanner.nextLine();
 			System.out.println();
-			int coins = 0;
-			int money = 0;
-			if (option.equals("1")) {
-				coins = 100;
-				money = 6;
-			} else if (option.equals("2")) {
-				coins = 200;
-				money = 12;
-			} else if (option.equals("3")) {
-				coins = 500;
-				money = 30;
-			} else if (option.equals("4")) {
-				coins = 1000;
-				money = 60;
+			
+			int optionInt;
+			try {
+				optionInt = Integer.parseInt(option);
+			} catch (NumberFormatException e) {
+				throw new ExInvalidOption();
+			}
+			
+			if (optionInt > 0 && optionInt <= coinsOption.length) {
+				int coins = Integer.parseInt(coinsOption[optionInt-1][0]);
+				int money = Integer.parseInt(coinsOption[optionInt-1][1]);
+				(new CmdBuyCoins(user, coins, money)).execute();
 			} else {
 				throw new ExInvalidOption();
 			}
-			(new CmdBuyCoins(user, coins, money)).execute();
 		} catch (ExInvalidOption e) {
 			System.out.println(e.getMessage());
 		}

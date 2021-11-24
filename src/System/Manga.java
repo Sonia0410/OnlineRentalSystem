@@ -70,36 +70,13 @@ public class Manga {
     	return false;
     }
     
-    //  fixed (ENTER key for ignore)
+//	Code Refactoring: Extract Method
     public boolean isThisBook(String bookIndex, String name, String category, String author, Date updateDate) {
     	//regular expression
-    	Pattern bookIndexPattern;
-    	if (bookIndex.equals("")) {
-    		bookIndexPattern = Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
-    	} else {
-    		bookIndexPattern = Pattern.compile("^.{0,}" + bookIndex + ".{0,}$", Pattern.CASE_INSENSITIVE);
-    	}
-    	
-    	Pattern namePattern;
-    	if (name.equals("")) {
-    		namePattern = Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
-    	} else {
-    		namePattern = Pattern.compile("^.{0,}" + name + ".{0,}$", Pattern.CASE_INSENSITIVE);
-    	}
-    	
-    	Pattern categoryPattern;
-    	if (category.equals("")) {
-    		categoryPattern = Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
-    	} else {
-    		categoryPattern = Pattern.compile("^.{0,}" + category + ".{0,}$", Pattern.CASE_INSENSITIVE);
-    	}
-    	
-    	Pattern authorPattern;
-    	if (author.equals("")) {
-    		authorPattern = Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
-    	} else {
-    		authorPattern = Pattern.compile("^.{0,}" + author + ".{0,}$", Pattern.CASE_INSENSITIVE);
-    	}
+    	Pattern bookIndexPattern = createSearchPattern(bookIndex);
+    	Pattern namePattern = createSearchPattern(name);
+    	Pattern categoryPattern = createSearchPattern(category);
+    	Pattern authorPattern = createSearchPattern(author);
         
     	if (bookIndexPattern.matcher(this.bookIndex).find()
     		&& namePattern.matcher(this.name).find()
@@ -114,6 +91,17 @@ public class Manga {
     		}
     	}
     	return false;
+    }
+    
+    //  fixed (leave the input field blank to ignore)
+//	Code Refactoring: Extract Method (a new method is added here)
+    public Pattern createSearchPattern (String search) {
+    	//regular expression
+    	if (search.equals("")) {
+    		return Pattern.compile("^.{1,}$", Pattern.CASE_INSENSITIVE);
+    	} else {
+    		return Pattern.compile("^.{0,}" + search + ".{0,}$", Pattern.CASE_INSENSITIVE);
+    	}
     }
     
     public String getBookIndex() {

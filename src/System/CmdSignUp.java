@@ -5,7 +5,7 @@ import java.util.*;
 
 public class CmdSignUp implements Command {
 	
-private RentalSystem rs = RentalSystem.getInstance();
+	private RentalSystem rs = RentalSystem.getInstance();
 	
 	// fixed (ensure the date of birth is not from future)
 	public void execute() {
