@@ -20,7 +20,7 @@ public class CmdRentManga implements Command {
 			if (manga != null) {
 				System.out.print("Please enter the episodes that you want to rent (split by |): ");
 				String episodes = scanner.nextLine();
-				String[] episodesList = episodes.split("|");
+				String[] episodesList = episodes.split("\\|");
 				System.out.println();
 				ArrayList<Integer> episodesIntList = new ArrayList<Integer>();
 				for (int i=0; i<episodesList.length; i++) {
