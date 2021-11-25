@@ -145,9 +145,11 @@ public class User {
 	
 	public void viewBookshelf() {
 		System.out.println("\nFound " + bookshelf.size() + " record(s):");
-		System.out.println("Index\tName\tEpisodes\tExpire Date\tRecord Type\n");
+		String format = "%-8s%-30s%-30s%-50s%-30s\n";
+		System.out.format(format, "Index", "Name", "Episodes", "Expire Date", "Record Type");
+		System.out.println();
     	for (RentalRecord rr : bookshelf) {
-    		System.out.println(rr.getInfo());
+    		System.out.format(format, rr.getInfo());
     	}
     	System.out.println();
 	}

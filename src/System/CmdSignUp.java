@@ -8,13 +8,22 @@ public class CmdSignUp implements Command {
 	private RentalSystem rs = RentalSystem.getInstance();
 	
 	// fixed (ensure the date of birth is not from future)
+	// fixed (ensure all the input field cannot be empty)
 	public void execute() {
 		Scanner scanner = new Scanner(System.in);
 		try {
 			System.out.print("Please enter a username: ");
 			String username = scanner.nextLine();
+			if (username.equals("")) {
+				System.out.println("\nCannot be empty!\n");
+				return;
+			}
 			System.out.print("Please enter a password: ");
 			String password = scanner.nextLine();
+			if (password.equals("")) {
+				System.out.println("\nCannot be empty!\n");
+				return;
+			}
 			System.out.print("Please enter your date of birth (format: yyyy/MM/dd): ");
 			String dob = scanner.nextLine();
 	        System.out.println();

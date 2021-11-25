@@ -58,9 +58,10 @@ public class Manga {
     }
     
     // fixed (hide updateDate hh:mm:ss)
-    public String getInfo() {
+    public String[] getInfo() {
     	DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-    	return bookIndex + "\t" + name + "\t" + category + "\t" + author + "\t" + df.format(updateDate) + "\t" + Integer.toString(numberOfEpisodes);
+    	String[] tableRow = {bookIndex, name, category, author, df.format(updateDate), Integer.toString(numberOfEpisodes)};
+    	return tableRow;
     }
     
     public boolean isThisBook(String bookIndex) {

@@ -104,9 +104,11 @@ public class RentalSystem {
 //		---------------
     	
     	System.out.println("Found " + result.size() + " Manga(s):");
-    	System.out.println("Index\tName\tCategory\tAuthor\tUpdate Date (yyyy/MM/dd)\tNumber of Episodes\n");
+    	String format = "%-8s%-30s%-30s%-30s%-30s%-20s\n";
+    	System.out.format(format, "Index", "Name", "Category", "Author", "Update Date (yyyy/MM/dd)", "Number of Episodes");
+    	System.out.println();
     	for (Manga manga : result) {
-    		System.out.println(manga.getInfo());
+    		System.out.format(format, manga.getInfo());
     	}
     	System.out.println();
     }

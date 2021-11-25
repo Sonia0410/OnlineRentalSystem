@@ -40,7 +40,7 @@ public class RentalRecord {
 		return type;
 	}
 	
-	public String getInfo() {
+	public String[] getInfo() {
 		String episodesString = "";
 		
 //		Code Refactoring: Replace Loop With Pipeline
@@ -73,6 +73,7 @@ public class RentalRecord {
 	        expireStatus = String.valueOf(difference);
 	        expireStatus = expireStatus.concat(" day(s) left ");
 		}
-		return manga.getBookIndex() + "\t" + manga.getName() + "\t" + episodesString + "\t" + expireStatus + "(" + expireDate.toString() + ")\t" + type.toString();
+		String[] tableRow = {manga.getBookIndex(), manga.getName(), episodesString, (expireStatus + "(" + expireDate.toString() + ")"), type.toString()};
+		return tableRow;
 	}
 }
